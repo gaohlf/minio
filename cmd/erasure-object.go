@@ -22,6 +22,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/minio/minio/internal/config"
 	"io"
 	"net/http"
 	"path"
@@ -2364,9 +2365,17 @@ func (er erasureObjects) TransitionObject(ctx context.Context, bucket, object st
 	}
 	traceFn := globalLifecycleSys.trace(fi.ToObjectInfo(bucket, object, opts.Versioned || opts.VersionSuspended))
 
-	destObj, err := genTransitionObjName(bucket)
-	if err != nil {
-		return err
+	destObj := ""
+	glacierDirect, err := config.LookupGlacierDirect()
+	if glacierDirect {
+		destObj = object
+		print("glacierDirect")
+	} else {
+		print("Not glacierDirect")
+		destObj, err = genTransitionObjName(bucket)
+		if err != nil {
+			return err
+		}
 	}
 
 	pr, pw := xioutil.WaitPipe()

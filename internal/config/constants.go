@@ -83,6 +83,8 @@ const (
 	EnvRegion     = "MINIO_REGION"      // legacy
 	EnvRegionName = "MINIO_REGION_NAME" // legacy
 
+	//Warm backend objects has same path if on; Default off
+	EnvGlacierDirect = "MINIO_GLACIER_DIRECT"
 )
 
 // Expiration Token durations

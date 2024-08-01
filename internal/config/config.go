@@ -670,6 +670,11 @@ func LookupWorm() (bool, error) {
 	return ParseBool(env.Get(EnvWorm, EnableOff))
 }
 
+// LookupGlacierDirect - check if EnvGlacierDirect is enabled
+func LookupGlacierDirect() (bool, error) {
+	return ParseBool(env.Get(EnvGlacierDirect, EnableOff))
+}
+
 // Carries all the renamed sub-systems from their
 // previously known names
 var renamedSubsys = map[string]string{
